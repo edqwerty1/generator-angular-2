@@ -1,5 +1,5 @@
 
-class App {
+export class App {
     constructor(private message: string = 'Hello World!') {
     }
 

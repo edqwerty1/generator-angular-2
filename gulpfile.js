@@ -9,8 +9,8 @@ var gulp = require('gulp'),
     Config = require('./gulpfile.config'),
     tsProject = tsc.createProject('tsconfig.json'),
     browserSync = require('browser-sync'),
-    superstatic = require( 'superstatic' );
-
+    superstatic = require( 'superstatic' ),
+    KarmaServer = require('karma').Server;
 var config = new Config();
 
 
@@ -73,6 +73,20 @@ gulp.task('serve', ['compile-ts', 'watch'], function() {
       middleware: superstatic({ debug: false})
     }
   });
+});
+
+gulp.task('test', function (done) {
+  new KarmaServer({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
+});
+
+gulp.task('testw', function (done) {
+  new KarmaServer({
+    configFile: __dirname + '/karma.conf.js',
+    autoWatch: true
+  }, done).start();
 });
 
 gulp.task('default', ['ts-lint', 'compile-ts']);
